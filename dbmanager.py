@@ -13,3 +13,5 @@ class db(sqlite3.database):
     
     def setT(this,rid):
         return 200
+    
+    def save():

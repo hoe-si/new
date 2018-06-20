@@ -24,6 +24,9 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
             this.wfile.write(a.getEnd())
         else:
             this.send_error(a.getState())
+    
+    def do_POST(this):
+        a=resource(this.path)
         
 
 
@@ -35,6 +38,7 @@ class resource:
     endcode= b""
     uri=""
     search={}
+    data={}
     state=200
     
     def __init__(this,uri):
@@ -75,6 +79,9 @@ class resource:
         repn=getBinOf(repn)
         this.endcode= this.endcode.replace(rep,repn)
         return 200
+    
+    def setData(this,data):
+        this.data= decparamform(data)
     
     def getState(this):
         return this.state

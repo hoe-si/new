@@ -1,14 +1,35 @@
 <html>
   <head>
     <title>&Uuml;berweisung</title>
+    <style>
+      #ctn{
+      margin:0 auto;
+      width:100%;
+      max-width:400px;
+      border:1px solid #888888;
+      padding:5px;
+      background-color:#DDDDDD;
+      }
+      #ctn table{
+      width:100%;
+      }
+      #ctn button{
+      width:100%;
+      }
+      #ctn input{
+      width:100%;
+      }
+    </style>
   </head>
   <body>
     <div id="ctn">
-      Zahlung von<br />KontoNr.:4456778<br />
+      &Uuml;berweisung<br />
       <form id="Apfel">
-	an:<input name="to" type="number" min="10000" max"99999"><br />
-	betrag:<input name="sum" value="0" type="number"><br />
-	<button type="submit" >OK</button>
+      <table>
+      <tr><td>von KontoNr.:</td><td>4456778</td></tr>
+      <tr><td>an:</td><td><input name="to" type="number" min="10000" max"99999"></td></tr>
+      <tr><td>betrag:</td><td><input name="sum" value="0" type="number"></td></tr>
+	<tr><td>absenden:</td><td><button type="submit" >OK</button></td></tr></table>
       </form>
     </div>
   </body>

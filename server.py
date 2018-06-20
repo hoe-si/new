@@ -43,12 +43,13 @@ class resource:
         this.uri=temp[0]
         if len(temp)>=2:
             this.search=decparamform(temp[1])
+        if this.uri.endswith("/"):
+            this.uri += "index.html"
         
-        
-        if True:
+        try:
             code= open("website"+this.uri,"rb").read()
-        else:
-            print("Site not found")
+        except:
+            this.state= 404
             return None
         this.endcode= code
         this.replaces = getSreps(this.uri)

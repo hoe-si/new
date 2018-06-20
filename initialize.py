@@ -15,6 +15,7 @@ for i in tables:
     executeable = "create table {tn} ({fn})".format(tn = i, fn = fNt)
     db.execute(executeable[0:len(executeable)-4]+")")
     print("added table "+i)
+db.execute("insert into konto (kto, pin) values (50000,1000)");
 dbfile.commit()
 dbfile.close()
 print("finished writing database")

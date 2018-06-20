@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>&Uuml;berweisung</title>
+  </head>
+  <body>
+    <div id="ctn">
+      Zahlung von<br />KontoNr.:4456778<br />
+      an:99999<br />
+      betrag:4829<br />
+     <form id="Apfel">
+	pin:<input name="pin" type="number" min="1000" max="9999"><br />
+	<button type="submit" >OK</button>
+      </form>
+    </div>
+  </body>
+</html>

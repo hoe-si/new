@@ -2,8 +2,8 @@ from http.server import *
 import os
 
 
-repdict={"Name":"Julius","id":"123","stand":"1"}
-sites={"/index.html":("Name","id","stand")}
+repdict={"name":"Julius","knf":"!search","stand":"1"}
+sites={"/index.html":("name","knf","stand"),"/init.html":("knf",)}
 
 
 
@@ -28,12 +28,18 @@ class resource:
     code=b""
     endcode= b""
     uri=""
+    search={}
     
     def __init__(this,uri):
         
-        this.uri= uri
+        temp= uri.split("?")
+        this.uri=temp[0]
+        if len(temp)>=2:
+            this.search=decparamform(temp[1])
+        
+        
         if True:
-            code= open("website"+uri,"rb").read()
+            code= open("website"+this.uri,"rb").read()
         else:
             print("Site not found")
             return None
@@ -46,10 +52,13 @@ class resource:
     
     def repOne(this,rep):
         repn=repdict[rep]
-        if type(repn)==str:
-            repn=repn.encode()
-        if type(rep)== str:
-            rep=rep.encode()
+        rep=getBinOf(rep)
+        rep= b"[$"+rep+ b"$]"
+        if repn == "!search":
+            if "knf" in this.search.keys():
+                repn= this.search["knf"]
+        
+        repn=getBinOf(repn)
         this.endcode= this.endcode.replace(rep,repn)
     
     def getEnd(this):
@@ -64,7 +73,21 @@ def run(server_class=HTTPServer, handler_class=MyHTTPRequestHandler):
     httpd = server_class(server_address, handler_class)
     httpd.serve_forever()
 
+def decparamform(parastring):
+	# the parameterstring will be called search here
+	params={}
+	spsearch=parastring.split("&")    #different search arguments
+	for i in spsearch:    #update key:parameter dictionnary
+		a=i.split("=")
+		if len(a)==2:
+			params.update({a[0]:a[1]})
+	
+	return params
 
+def getBinOf(inp):
+    if type(inp)==str:
+        inp=inp.encode()
+    return inp
 
 
 

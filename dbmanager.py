@@ -5,7 +5,7 @@ class db(sqlite3.database):
     
     def __init__(this):
     
-    def getM(this):
+    def getM(this,kto):
         return 10
     
     def initT(this,ktof,ktot,msum):

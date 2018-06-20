@@ -1,4 +1,4 @@
-import http.server
+from http.server import *
 import os
 
 os.chdir("website")

@@ -3,7 +3,10 @@ import os
 
 
 repdict={"name":"Julius","knf":"!search","stand":"1"}
-sites={"/index.html":("name","knf","stand"),"/init.html":("knf",)}
+sites={"/index.html":("name","knf","stand"),
+"/init.html":("knf",),
+"/css/style.css":(),
+"pin.html":("knf",)}
 
 
 
@@ -15,9 +18,12 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(this):
         a=resource(this.path)
         a.replace()
-        this.send_response(200)
-        this.end_headers()
-        this.wfile.write(a.getEnd())
+        if a.getState()==200:
+            this.send_response(200)
+            this.end_headers()
+            this.wfile.write(a.getEnd())
+        else:
+            this.send_error(a.getState())
         
 
 
@@ -29,6 +35,7 @@ class resource:
     endcode= b""
     uri=""
     search={}
+    state=200
     
     def __init__(this,uri):
         
@@ -45,10 +52,14 @@ class resource:
             return None
         this.endcode= code
         this.replaces = getSreps(this.uri)
+        this.status= 200
     
     def replace(this):
         for i in this.replaces:
-            this.repOne(i)
+            if this.state==200:
+                this.state= this.repOne(i)
+            else:
+                return this.state
     
     def repOne(this,rep):
         repn=repdict[rep]
@@ -57,9 +68,15 @@ class resource:
         if repn == "!search":
             if "knf" in this.search.keys():
                 repn= this.search["knf"]
+            else:
+                return 400
         
         repn=getBinOf(repn)
         this.endcode= this.endcode.replace(rep,repn)
+        return 200
+    
+    def getState(this):
+        return this.state
     
     def getEnd(this):
         return this.endcode

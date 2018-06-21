@@ -13,7 +13,7 @@ class DB():
         this.db = this.dbfile.cursor()
         print("apfel")
     #get the money
-    def getBetrag(this,kto):
+    def getKontostand(this,kto):
         money = 0
         sql="select betrag from transaktion where ankto="+str(kto)+" AND erledigt=1;"
         add = this.db.execute(sql).fetchall()

@@ -4,6 +4,7 @@ from dbmanager import DB
 db = DB()
 
 
+
 @route('/static/<filename:path>')
 def send_static(filename):
     return static_file(filename, root='./static')
@@ -38,5 +39,14 @@ def page_return():
             db.setErledigt(request.forms.get("tid"))
             params["erledigt"]="Erfolgreich"
     return template('./templates/pin.html', **params)
+
+
+@route("<filename:path>")
+def page_index(filename):
+    if filename.endswith("/"):
+        filename += "index.html"
+        print(filename)
+    return send_static(filename)
+
 
 run(host='localhost', port=8000, debug=True)

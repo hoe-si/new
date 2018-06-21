@@ -26,6 +26,8 @@ def page_pin():
   
     return template('./templates/pin.html', **params)
 
+
+
 @route('/return.html', method="POST")
 def page_return():
     params = {
@@ -38,7 +40,7 @@ def page_return():
         if int(db.getKontostand(request.forms.get("vonkto"))) >= int(request.forms.get("betrag")):
             db.setErledigt(request.forms.get("tid"))
             params["erledigt"]="Erfolgreich"
-    return template('./templates/pin.html', **params)
+    return template('./templates/return.html', **params)
 
 
 @route("<filename:path>")

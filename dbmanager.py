@@ -45,8 +45,10 @@ class DB():
     #check for the pin
     def checkPin(this, kto, pin):
         f = this.db.execute("select pin from konto where kto='"+str(kto)+"';").fetchone()
-        if str(f[0]) == str(pin):
-            return True
-        else:
+        try:
+            if str(f[0]) == str(pin):
+                return True
+            else:
+                return False
+        except:
             return False
-

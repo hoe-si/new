@@ -22,7 +22,9 @@ def page_pin():
         "betrag":request.forms.get("betrag"),
         "tid":db.initTransaktion(request.forms.get("vonkto"), request.forms.get("ankto"), request.forms.get("betrag"))
     }
-  
+    print("TID"*10)
+    print(params["tid"])
+    params["tid"]=str(params["tid"])
     return template('./templates/pin.html', **params)
 
 @route('/return.html', method="POST")
@@ -37,6 +39,6 @@ def page_return():
         if int(db.getKontostand(request.forms.get("vonkto"))) >= int(request.forms.get("betrag")):
             db.setErledigt(request.forms.get("tid"))
             params["erledigt"]="Erfolgreich"
-    return template('./templates/pin.html', **params)
+    return template('./templates/return.html', **params)
 
 run(host='localhost', port=8000, debug=True)

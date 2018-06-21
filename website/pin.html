@@ -6,14 +6,14 @@
   <body>
     <div id="ctn">
      <form id="Apfel" method="post" action="return.html">
-       <input type="hidden" name="knf" value="[$knf$]">
-       <input type="hidden" name="knt" value="[$knt$]">
-       <input type="hidden" name="mnt" value="[$mnt$]">
-       <input type="hidden" name="knf" value="[$tid$]">
+       <input type="hidden" name="vonkto" value="{{vonkto}}">
+       <input type="hidden" name="ankto" value="{{ankto}}">
+       <input type="hidden" name="betrag" value="{{betrag}}">
+       <input type="hidden" name="tid" value="{{tid}}">
        <table>
-	<tr><td>von KontoNr.:</td><td>[$knf$]</td></tr>
-	<tr><td>an:</td><td>[$knt$]</td></tr>
-	<tr><td>betrag</td><td>[$mnt$]</td></tr>
+	<tr><td>von KontoNr.:</td><td>{{vonkto}}</td></tr>
+	<tr><td>an:</td><td>{{ankto}}</td></tr>
+	<tr><td>betrag</td><td>{{betrag}}</td></tr>
 	<tr><td>pin:</td><td><input name="pin" type="number" min="1000" max="9999"></td></tr>
 	<tr><td>absenden:</td><td><button type="submit" >OK</button></td></tr>
 	</table>

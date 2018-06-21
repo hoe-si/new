@@ -7,11 +7,11 @@
     <div id="ctn">
       &Uuml;berweisung<br />
       <form id="Apfel" method="post" action="pin.html">
-  	    <input type="hidden" name="knf" value="{{kto}}">
+  	    <input type="hidden" name="vonkto" value="{{kto}}">
         <table>
           <tr><td>von KontoNr.:</td><td>{{kto}}</td></tr>
-          <tr><td>an:</td><td><input name="knt" type="number" min="10000" max"99999"></td></tr>
-          <tr><td>betrag:</td><td><input name="mnt" value="0" type="number"></td></tr>
+          <tr><td>an:</td><td><input name="ankto" type="number" min="10000" max"99999"></td></tr>
+          <tr><td>betrag:</td><td><input name="betrag" value="0" type="number"></td></tr>
         	<tr><td>absenden:</td><td><button type="submit" >OK</button></td></tr>
         </table>
       </form>

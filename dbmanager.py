@@ -13,7 +13,7 @@ class DB():
         this.db = this.dbfile.cursor()
         print("apfel")
     #get the money
-    def getM(this,kto):
+    def getBetrag(this,kto):
         money = 0
         sql="select betrag from transaktion where ankto="+str(kto)+" AND erledigt=1;"
         add = this.db.execute(sql).fetchall()
@@ -25,7 +25,7 @@ class DB():
             money-=int(i[0])
         return money
     #initialise transaction
-    def initT(this,ktof,ktot,msum):
+    def initTransaktion(this,ktof,ktot,msum):
         #Generate the random tid
         tid=random.randint(1000,9999)
         while(len(this.db.execute("select * from transaktion where tid='"+str(tid)+"';").fetchmany(100))>=1):
@@ -39,11 +39,11 @@ class DB():
         this.dbfile.commit()
         return tid
     #confirm the transaction
-    def setT(this,tid):
+    def setErledigt(this,tid):
         this.db.execute("update transaktion set erledigt = 1 where tid="+str(tid)+";")
         this.dbfile.commit()
     #check for the pin
-    def checkP(this, kto, pin):
+    def checkPin(this, kto, pin):
         f = this.db.execute("select pin from konto where kto='"+str(kto)+"';").fetchone()
         if str(f[0]) == str(pin):
             return True

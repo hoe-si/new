@@ -4,7 +4,7 @@ import sqlite3, random
 from datetime import datetime
 
 
-class db():
+class DB():
     
     def __init__(this):
         #set a database

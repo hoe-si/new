@@ -1,4 +1,7 @@
 from bottle import route, run, static_file, template, request
+from dbmanager import DB
+
+db = DB()
 
 @route('/init.html')
 def page_init():
@@ -10,7 +13,9 @@ def page_pin():
   params = {
     "vonkto":request.forms.get("vonkto"),
     "ankto":request.forms.get("ankto"),
-    "betrag":request.forms.get("betrag")}
+    "betrag":request.forms.get("betrag"),
+    "tid":db.initT(request.forms.get("vonkto"), request.forms.get("ankto"), request.forms.get("betrag"))
+    }
   
   return template('./website/pin.html', **params)
 

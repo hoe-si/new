@@ -36,7 +36,7 @@ def page_return():
         "betrag":request.forms.get("betrag"),
         "erledigt":"Fehlgeschlagen"
     }
-    if db.checkPin(request.forms.get("vonkto"),request.forms.get("pin")):
+    if db.checkPin(request.forms.get("vonkto"),request.forms.get("pin")):   # wirft evtl. einen Fehler, wenn der Wert kein String ist
         if int(db.getKontostand(request.forms.get("vonkto"))) >= int(request.forms.get("betrag")):
             db.setErledigt(request.forms.get("tid"))
             params["erledigt"]="Erfolgreich"
@@ -48,6 +48,16 @@ def page_return():
 def page_select():
     return template('./templates/select.html', kto= request.query.kto or "fehlerhaft")
 
+
+@route("/kontostand.html", method="POST")
+def page_kontostand():
+    reqKto=request.forms.get("kto")
+    if db.checkPin(reqKto,request.forms.get("pin")):
+        return template("./templates/kontostand.html",kto = request.forms.get("kto"), betrag= db.getKontostand(reqKto))
+
+@route("/check.html")
+def page_check():
+    return template('./templates/check.html', kto= request.query.kto or "fehlerhaft")
 
 @route("<filename:path>")
 def page_index(filename):

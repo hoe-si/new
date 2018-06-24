@@ -14,4 +14,7 @@
 }
 #ctn input{
     width:100%;
-} 
+}
+body{
+    background-repeat: no-repeat;
+}

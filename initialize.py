@@ -1,6 +1,6 @@
-#/usr/bin/python3
+#! /usr/bin/python3
 
-import sqlite3
+import sqlite3, random
 from sqlite3 import Error
 
 dbpath = "database.db"
@@ -15,7 +15,18 @@ for i in tables:
     executeable = "create table {tn} ({fn})".format(tn = i, fn = fNt)
     db.execute(executeable[0:len(executeable)-4]+")")
     print("added table "+i)
-db.execute("insert into konto (kto, pin) values (50000,1000)")
+#create groups
+for i in range(20000,20003):
+    pin = random.randint(1000,9999)
+    db.execute("insert into konto (kto, pin) values ("+str(i)+","+str(pin)+")")
+#create pupils
+groups = (20000,20002,20001)
+for i in range(10000,10050):
+    grp = groups[random.randint(0,2)]
+    pin = random.randint(1000,9999)
+    db.execute("insert into konto (kto, pin) values ("+str(i)+","+str(pin)+");")
+    db.execute("insert into gruppen (skto,gkto) values("+str(i)+","+str(grp)+");")
+#save everything
 dbfile.commit()
 dbfile.close()
 print("finished writing database")

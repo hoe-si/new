@@ -1,4 +1,4 @@
-from bottle import route, run, static_file, template, request
+from bottle import route, run, static_file, template, request, error
 from dbmanager import DB
 
 db = DB()
@@ -23,7 +23,7 @@ def page_pin():
         "betrag":request.forms.get("betrag"),
         "tid":db.initTransaktion(request.forms.get("vonkto"), request.forms.get("ankto"), request.forms.get("betrag"))
     }
-  
+    
     return template('./templates/pin.html', **params)
 
 
@@ -58,6 +58,14 @@ def page_kontostand():
 @route("/check.html")
 def page_check():
     return template('./templates/check.html', kto= request.query.kto or "fehlerhaft")
+
+@error(500)
+def page_error(error):
+    return send_static('/errors/500.html')
+
+@error(404)
+def page_error(error):
+    return send_static('/errors/404.html')
 
 @route("<filename:path>")
 def page_index(filename):

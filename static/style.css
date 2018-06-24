@@ -18,3 +18,13 @@
 body{
     background-repeat: no-repeat;
 }
+.pictcha{
+    margin:10 auto;
+    width:100%;
+    max-width:350px;
+    height:110;
+    border:1px solid #888888;
+    padding:5px;
+    background-image:url(./img/back.gif);
+    background-color:black;
+}

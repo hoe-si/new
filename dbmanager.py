@@ -16,11 +16,11 @@ class DB():
     #get the money
     def getKontostand(this,kto):
         money = 0
-        sql="select betrag from transaktion where ankto="+str(kto)+" AND erledigt=1;"
+        sql="select betrag from transaktion where ankto='"+str(kto)+"' AND erledigt=1;"
         add = this.db.execute(sql).fetchall()
         for i in add:
             money+=int(i[0])
-        sql="select betrag from transaktion where vonkto="+str(kto)+" AND erledigt=1;"
+        sql="select betrag from transaktion where vonkto='"+str(kto)+"' AND erledigt=1;"
         sub = this.db.execute(sql).fetchall()
         for i in sub:
             money-=int(i[0])
@@ -29,7 +29,7 @@ class DB():
     #initialise transaction
     def initTransaktion(this,ktof,ktot,msum):
         #Generate the random tid
-        tid=random.randint(1000,9999)
+        tid=random.randint(1000000,9999999)
         while(len(this.db.execute("select * from transaktion where tid='"+str(tid)+"';").fetchmany(100))>=1):
             tid=random.randint(1000,9999)
         #genereate the timestamp
@@ -42,10 +42,10 @@ class DB():
         return tid
         
     #confirm the transaction
-    def setErledigt(this,tid,kto):
-        apfel = this.db.execute("select * from transaktion where tid="+str(tid)+" && vonkto="+str(kto)+";").fetchmany(2)
+    def setErledigt(this,tid,vonkto,ankto,betrag):
+        apfel = this.db.execute("select * from transaktion where tid='"+str(tid)+"' and vonkto='"+str(vonkto)+"' and ankto='"+str(ankto)+"' and betrag='"+str(betrag)+"';").fetchmany(2)
         if(len(apfel)>= 1):
-            this.db.execute("update transaktion set erledigt = 1 where tid="+str(tid)+";")
+            this.db.execute("update transaktion set erledigt = 1 where tid='"+str(tid)+"';")
             this.dbfile.commit()
         
     #check for the pin
@@ -63,4 +63,8 @@ class DB():
         print(wrongKeyTries)
         return success and len(wrongKeyTries) <= 5
         
+    def dummerTest(self):
+        self.db.execute("select vonkto from konto")
 
+apfel = DB()
+apfel.dummerTest()

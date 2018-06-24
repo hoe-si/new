@@ -60,12 +60,16 @@ def page_check():
     return template('./templates/check.html', kto= request.query.kto or "fehlerhaft")
 
 @error(500)
-def page_error(error):
+def page_error_500(error):
     return send_static('/errors/500.html')
 
 @error(404)
-def page_error(error):
+def page_error_404(error):
     return send_static('/errors/404.html')
+
+@error(403)
+def page_error_403(error):
+    return send_static('/errors/403.html')
 
 @route("<filename:path>")
 def page_index(filename):

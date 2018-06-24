@@ -42,9 +42,11 @@ class DB():
         return tid
         
     #confirm the transaction
-    def setErledigt(this,tid):
-        this.db.execute("update transaktion set erledigt = 1 where tid="+str(tid)+";")
-        this.dbfile.commit()
+    def setErledigt(this,tid,kto):
+        apfel = this.db.execute("select * from transaktion where tid="+str(tid)+" && vonkto="+str(kto)+";").fetchmany(2)
+        if(len(apfel)>= 1):
+            this.db.execute("update transaktion set erledigt = 1 where tid="+str(tid)+";")
+            this.dbfile.commit()
         
     #check for the pin
     def checkPin(this, kto, pin):

@@ -63,8 +63,5 @@ class DB():
         print(wrongKeyTries)
         return success and len(wrongKeyTries) <= 5
         
-    def dummerTest(self):
-        self.db.execute("select vonkto from konto")
 
-apfel = DB()
-apfel.dummerTest()
+#apfel = DB()

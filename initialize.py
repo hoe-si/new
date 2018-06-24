@@ -7,7 +7,7 @@ dbpath = "database.db"
 dbfile = sqlite3.connect(dbpath)
 db = dbfile.cursor()
 print("writing new database as: "+dbpath)
-tables={"konto":(("kto","INTEGER"),("pin","INTEGER")),"transaktion":(("tid","INTEGER PRIMARY KEY"),("vonkto","INTEGER"),("ankto","INTEGER"),("betrag","INTEGER"),("erledigt","INTEGER"),("zeit","TEXT")),"logfile":(("zeit","TEXT"),("kto","INTEGER"),("erledigt","INTEGER")),"gruppen":(("skto","INTEGER PRIMARY KEY"),("gkto","INTEGER"))}
+tables={"konto":(("kto","INTEGER"),("pin","INTEGER")),"transaktion":(("tid","INTEGER PRIMARY KEY"),("vonkto","INTEGER"),("ankto","INTEGER"),("betrag","INTEGER"),("erledigt","INTEGER"),("zeit","INTEGER")),"logfile":(("zeit","INTEGER"),("kto","INTEGER"),("erledigt","INTEGER")),"gruppen":(("skto","INTEGER PRIMARY KEY"),("gkto","INTEGER"))}
 for i in tables:
     fNt = ""
     for e in tables[i]:

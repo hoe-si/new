@@ -50,7 +50,7 @@ def page_return():
     
     if db.checkPin(getIntOf(request.forms.get("vonkto")),getIntOf(request.forms.get("pin"))):
         if int(db.getKontostand(getIntOf(request.forms.get("vonkto")))) >= getIntOf(request.forms.get("betrag")):   # !!! Kann im Betrag geändert werden, um falsche Überweilungen zu machne
-            if db.setErledigt(getIntOf(request.forms.get("tid")), getIntOf(request.forms.get("vonkto"), getIntOf(request.forms.get("ankto")), getIntOf(request.forms.get("betrag"))):
+            if db.setErledigt(getIntOf(request.forms.get("tid")), getIntOf(request.forms.get("vonkto")), getIntOf(request.forms.get("ankto")), getIntOf(request.forms.get("betrag"))):
                 params["erledigt"]="Erfolgreich"
     return template('./templates/return.html', **params)
 

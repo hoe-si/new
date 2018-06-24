@@ -43,12 +43,23 @@ def page_return():
     return template('./templates/return.html', **params)
 
 
+
+@route("/select.html")
+def page_select():
+    return template('./templates/select.html', kto= request.query.kto or "fehlerhaft")
+
+
 @route("<filename:path>")
 def page_index(filename):
     if filename.endswith("/"):
         filename += "index.html"
         print(filename)
     return send_static(filename)
+
+
+
+
+
 
 
 run(host='localhost', port=8000, debug=True)

@@ -12,6 +12,7 @@ class DB():
         this.dbfile = sqlite3.connect(this.dbpath)
         this.db = this.dbfile.cursor()
         print("apfel")
+        
     #get the money
     def getKontostand(this,kto):
         money = 0
@@ -24,6 +25,7 @@ class DB():
         for i in sub:
             money-=int(i[0])
         return money
+        
     #initialise transaction
     def initTransaktion(this,ktof,ktot,msum):
         #Generate the random tid
@@ -38,10 +40,12 @@ class DB():
         this.db.execute("insert into transaktion (tid,vonkto,ankto,betrag,erledigt,zeit) values "+vls+";")
         this.dbfile.commit()
         return tid
+        
     #confirm the transaction
     def setErledigt(this,tid):
         this.db.execute("update transaktion set erledigt = 1 where tid="+str(tid)+";")
         this.dbfile.commit()
+        
     #check for the pin
     def checkPin(this, kto, pin):
         f = this.db.execute("select pin from konto where kto='"+str(kto)+"';").fetchone()

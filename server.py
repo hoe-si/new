@@ -1,7 +1,18 @@
 from bottle import route, run, static_file, template, request, error
 from dbmanager import DB
+import http.errors
 
 db = DB()
+
+
+def getIntOf(IntOrString, ifError=0):
+    if type(IntOrString) != int:
+        try:
+            return int(IntOrString)
+        except ValueError:
+            return ifError
+    return IntOrString
+
 
 
 
@@ -54,6 +65,9 @@ def page_kontostand():
     reqKto=request.forms.get("kto")
     if db.checkPin(reqKto,request.forms.get("pin")):
         return template("./templates/kontostand.html",kto = request.forms.get("kto"), betrag= db.getKontostand(reqKto))
+    else:
+        return page_error_403()
+         
 
 @route("/check.html")
 def page_check():

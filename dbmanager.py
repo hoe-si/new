@@ -47,13 +47,13 @@ class DB():
         if(len(apfel)>= 1):
             this.db.execute("update transaktion set erledigt = 1 where tid='"+str(tid)+"';")
             this.dbfile.commit()
+            return True
+        return False
         
     #check for the pin
     def checkPin(this, kto, pin):
-        
         checkLogfileSql="select * from logfile where kto='"+str(kto) + "' and zeit > " + str(time()-5*60) + ";"
         wrongKeyTries=this.db.execute(checkLogfileSql).fetchmany(6)
-        
         f = this.db.execute("select pin from konto where kto='"+str(kto)+"' and pin='"+str(pin) + "';").fetchmany(2)
         success = len(f)==1
         timestamp = time()

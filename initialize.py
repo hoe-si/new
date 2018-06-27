@@ -26,6 +26,7 @@ for i in range(10000,10050):
     pin = random.randint(1000,9999)
     db.execute("insert into konto (kto, pin) values ("+str(i)+","+str(pin)+");")
     db.execute("insert into gruppen (skto,gkto) values("+str(i)+","+str(grp)+");")
+    db.execute("insert into transaktion (tid,vonkto,ankto,betrag,erledigt,zeit) values("+str(i)+",00000,"+str(i)+",10,1,0)")
 #save everything
 dbfile.commit()
 dbfile.close()

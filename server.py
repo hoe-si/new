@@ -4,14 +4,14 @@ from dbmanager import DB
 db = DB()
 
 
-def getIntOf(IntOrString, ifError=0):
+def getNOf(IntOrString, ifError=0):
     # function returns integer value of any other value or the value in ifError, if converting to int is impossible
     if type(IntOrString) != int:
         try:
             return int(IntOrString)
         except ValueError:
             return ifError
-    return IntOrString
+    return abs(IntOrString)
 
 
 
@@ -32,7 +32,7 @@ def page_pin():
         "vonkto":request.forms.get("vonkto"),
         "ankto":request.forms.get("ankto"),
         "betrag":request.forms.get("betrag"),
-        "tid":db.initTransaktion(getIntOf(request.forms.get("vonkto")), getIntOf(request.forms.get("ankto")), getIntOf(request.forms.get("betrag")))
+        "tid":db.initTransaktion(getNOf(request.forms.get("vonkto")), getNOf(request.forms.get("ankto")), getNOf(request.forms.get("betrag")))
     }
     
     return template('./templates/pin.html', **params)
@@ -48,9 +48,9 @@ def page_return():
         "erledigt":"Fehlgeschlagen"
     }
     
-    if db.checkPin(getIntOf(request.forms.get("vonkto")),getIntOf(request.forms.get("pin"))):
-        if int(db.getKontostand(getIntOf(request.forms.get("vonkto")))) >= getIntOf(request.forms.get("betrag")):   # !!! Kann im Betrag geändert werden, um falsche Überweilungen zu machne
-            if db.setErledigt(getIntOf(request.forms.get("tid")), getIntOf(request.forms.get("vonkto")), getIntOf(request.forms.get("ankto")), getIntOf(request.forms.get("betrag"))):
+    if db.checkPin(getNOf(request.forms.get("vonkto")),getNOf(request.forms.get("pin"))):
+        if int(db.getKontostand(getNOf(request.forms.get("vonkto")))) >= getNOf(request.forms.get("betrag")):   # !!! Kann im Betrag geändert werden, um falsche Überweilungen zu machne
+            if db.setErledigt(getNOf(request.forms.get("tid")), getNOf(request.forms.get("vonkto")), getNOf(request.forms.get("ankto")), getNOf(request.forms.get("betrag"))):
                 params["erledigt"]="Erfolgreich"
     return template('./templates/return.html', **params)
 
@@ -99,4 +99,4 @@ def page_index(filename):
 
 
 
-run(host='localhost', port=8000, debug=True)
+run(host='0.0.0.0', port=8000, debug=True)

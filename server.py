@@ -49,8 +49,9 @@ def page_return():
     }
     
     if db.checkPin(getNOf(request.forms.get("vonkto")),getNOf(request.forms.get("pin"))):
-        if int(db.getKontostand(getNOf(request.forms.get("vonkto")))) >= getNOf(request.forms.get("betrag")):   # !!! Kann im Betrag geändert werden, um falsche Überweilungen zu machne
+        if int(db.getKontostand(getNOf(request.forms.get("vonkto")))) >= getNOf(request.forms.get("betrag")):
             if db.setErledigt(getNOf(request.forms.get("tid")), getNOf(request.forms.get("vonkto")), getNOf(request.forms.get("ankto")), getNOf(request.forms.get("betrag"))):
+                print("succesfull transaction")
                 params["erledigt"]="Erfolgreich"
     return template('./templates/return.html', **params)
 

@@ -51,8 +51,8 @@ class DB():
     #check for the pin
     def checkPin(this, kto, pin):
         
-        checkLogfileSql="select * from logfile where kto='"+str(kto) + "' and zeit > " + str(time()-5*60) + ";"
-        wrongKeyTries=this.db.execute(checkLogfileSql).fetchmany(6)
+        checkLogfileSql="select * from logfile where erledigt=0 and zeit > " + str(time()-5*60) + " and  kto='"+str(kto) + "';"
+        wrongKeyTries=this.db.execute(checkLogfileSql).fetchmany(101)
         
         f = this.db.execute("select pin from konto where kto='"+str(kto)+"' and pin='"+str(pin) + "';").fetchmany(2)
         success = len(f)==1
@@ -61,7 +61,6 @@ class DB():
         this.db.execute(logfile_sql)
         print(success)
         print(wrongKeyTries)
-        return success and len(wrongKeyTries) <= 5
+        return success and len(wrongKeyTries) <= 100
         
 
-#apfel = DB()

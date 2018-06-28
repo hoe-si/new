@@ -1,3 +1,5 @@
+#! python3
+
 from bottle import route, run, static_file, template, request, error
 from dbmanager import DB
 
@@ -45,13 +47,27 @@ def page_return():
         "vonkto":request.forms.get("vonkto"),
         "ankto":request.forms.get("ankto"),
         "betrag":request.forms.get("betrag"),
+        "hintergrund":"#ff0000",
         "erledigt":"Fehlgeschlagen"
     }
     
-    if db.checkPin(getNOf(request.forms.get("vonkto")),getNOf(request.forms.get("pin"))):
-        if int(db.getKontostand(getNOf(request.forms.get("vonkto")))) >= getNOf(request.forms.get("betrag")):   # !!! Kann im Betrag geändert werden, um falsche Überweilungen zu machne
-            if db.setErledigt(getNOf(request.forms.get("tid")), getNOf(request.forms.get("vonkto")), getNOf(request.forms.get("ankto")), getNOf(request.forms.get("betrag"))):
+    tid= getNOf(request.forms.get("vonkto"))
+    vonkto= getNOf(request.forms.get("vonkto"))
+    ankto = getNOf(request.forms.get("ankto"))
+    betrag = getNOf(request.forms.get("betrag"))
+    pin = getNOf(request.forms.get("pin"))
+                    
+    if db.checkPin(vonkto,pin):
+        if int(db.getKontostand(vonkto)) >= betrag:   # !!! Kann im Betrag geändert werden, um falsche Überweilungen zu machnen
+            if db.setErledigt(tid, vonkto, ankto, betrag):
                 params["erledigt"]="Erfolgreich"
+                params["hintergrund"]="#00ff00"
+            else:
+                params["erledigt"]="Überweisung fehlgeschlagen!"
+        else:
+            params["erledigt"]="Unzureichender Kontostand"
+    else:
+        params["erledigt"]="Pin oder Kontonummer falsch"
     return template('./templates/return.html', **params)
 
 

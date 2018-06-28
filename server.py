@@ -51,7 +51,7 @@ def page_return():
         "erledigt":"Fehlgeschlagen"
     }
     
-    tid= getNOf(request.forms.get("vonkto"))
+    tid= getNOf(request.forms.get("tid"))
     vonkto= getNOf(request.forms.get("vonkto"))
     ankto = getNOf(request.forms.get("ankto"))
     betrag = getNOf(request.forms.get("betrag"))

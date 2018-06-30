@@ -6,15 +6,34 @@
   <body>
     <div id="ctn">
       &Uuml;berweisung<br />
-      <form id="Apfel" method="post" action="pin.html">
+      <form onsubmit="return safeAnkto()" id="Apfel" method="post" action="pin.html">
   	    <input type="hidden" name="vonkto" value="{{kto}}">
         <table>
           <tr><td>von KontoNr.:</td><td>{{kto}}</td></tr>
-          <tr><td>an:</td><td><input name="ankto" type="number" min="10000" max"99999"></td></tr>
+          <tr><td>an:</td><td><input name="ankto" type="number" min="10000" max"99999" id="anktoInput"></td></tr>
           <tr><td>betrag:</td><td><input name="betrag" type="number" min="1"></td></tr>
         	<tr><td>absenden:</td><td><button type="submit" >OK</button></td></tr>
         </table>
       </form>
+      <script type="text/javascript">
+      
+      function safeAnkto(){
+        var ankto= document.getElementById("anktoInput").value;
+        document.cookie= ankto;
+        var inTwoDays= new Date();
+        inTwoDays.setTime(2*24*60*60*1000+ inTwoDays.getTime());
+        TwoDaysString= inTwoDays.toGMTString();
+        document.cookie= "expires= "+ TwoDaysString;
+        return true
+      }
+      
+      function setAnkto(){
+        var ankto= document.cookie;
+        document.getElementById("anktoInput").value= parseInt(ankto);
+      }
+      
+      window.addEventListener('DOMContentLoaded', setAnkto);
+      </script>
     </div>
   </body>
 </html>

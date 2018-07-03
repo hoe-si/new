@@ -1,5 +1,5 @@
 #! usr/bin/python3
-import sqlite3
+import pymysql as sqlite3
 
 
 standard='''<div style="float:left; border:3px solid black; page-break-inside: avoid;">
@@ -17,11 +17,11 @@ Passwort:<!-- pw --!></div>
 </div>'''
 
 
-a=open("a.html","a")
+a=open("qr-generator/a.html","a")
 
 a.write('<html><body>')
 
-
+from dbconf import a as conf
 
 def newdiv(pid,Name,Store,pw,nl=False):
 	a=standard.replace("<!-- Name pupil --!>",Name.rjust(10))
@@ -32,9 +32,15 @@ def newdiv(pid,Name,Store,pw,nl=False):
 #		a+= "</tr><tr>"
 	return a
 
-dbf=sqlite3.connect("database.db")
+dbf=sqlite3.connect(host='localhost',
+                    user=conf["user"],
+                    password=conf["password"],
+                    db='hoesi',
+                    charset='utf8mb4',
+                    cursorclass=pymysql.cursors.DictCursor)
 db=dbf.cursor()
-plist=db.execute("select distinct konto.kto, konto.pin, gruppen.gkto from gruppen, konto where konto.kto=gruppen.skto").fetchall()
+db.execute("select distinct konto.kto, konto.pin, gruppen.gkto from gruppen, konto where konto.kto=gruppen.skto")
+plist=db.fetchall()
 c=0
 for i in plist:
 	c+=1

@@ -31,8 +31,9 @@ class DBsqlite():
     def initTransaktion(this,ktof,ktot,msum):
         #Generate the random tid
         tid=random.randint(1000000,9999999)
-        while(len(this.db.execute("select * from transaktion where tid='"+str(tid)+"';").fetchmany(100))>=1):
-            tid=random.randint(1000,9999)
+        a = this.db.execute("select * from transaktion where tid='"+str(tid)+"';")
+        while(len(a.fetchmany(100))>=1):
+            tid=random.randint(1000000,9999999)
         #genereate the timestamp
         apfel = time()
         #prouce the sql

@@ -6,7 +6,7 @@ standard='''<div style="float:left; border:3px solid black; page-break-inside: a
 <font style="size:20">
 <table height="200" width="600" border="0">
 <tr><td colspan="3"><h1>H&ouml;Si-City 3.0</h1></td></tr>
-<tr><td rowspan="4"><img src="https://www.qrcode-generator.de/phpqrcode/getCode.php?cht=qr&chl=http%3A%2F%2F192.168.178.54:8000%2Fselect.html%3Fkto%3D<!-- id pupil --!>&chs=180x180&choe=UTF-8&chld=L|0" height="200" width="200"></td><td>Name:<br><u><!-- Name pupil --!></u></td><td rowspan="2"><img src="smv.png" height="100" width="132"></td></tr>
+<tr><td rowspan="4"><img src="https://www.qrcode-generator.de/phpqrcode/getCode.php?cht=qr&chl=http%3A%2F%2Fhoesidollar.de%2Fselect.html%3Fkto%3D<!-- id pupil --!>&chs=180x180&choe=UTF-8&chld=L|0" height="200" width="200"></td><td>Name:<br><u><!-- Name pupil --!></u></td><td rowspan="2"><img src="smv.png" height="100" width="132"></td></tr>
 <tr><td>Gesch&auml;ft:<br><u><!-- Geschaeft --!></u></td><td></td></tr>
 <tr><td>ID:<u><!-- id pupil --!></u></td><td><img src="hosi.png" height="100" width="132"></td></tr>
 <tr><td></td><td></td></tr>

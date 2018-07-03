@@ -77,7 +77,7 @@ class DBmysql():
         this.dbfile = pymysql.connect(host='localhost',
                                       user=conf["user"],
                                       password=conf["password"],
-                                      db='db',
+                                      db='hoesi',
                                       charset='utf8mb4',
                                       cursorclass=pymysql.cursors.DictCursor)
         this.db = this.dbfile.cursor()

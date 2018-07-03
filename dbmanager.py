@@ -64,17 +64,17 @@ class DB():
     #check for the pin
     def checkPin(this, kto, pin):
 
-        checkLogfileSql="select * from logfile where erledigt=false and zeit > " + str(time()-5*60) + " and  kto='"+str(kto) + "';"
-        this.db.execute(checkLogfileSql)
-        wrongKeyTries=this.db.fetchmany(101)
+#        checkLogfileSql="select * from logfile where erledigt='0' and zeit > " + str(time()-5*60) + " and  kto='"+str(kto) + "';"
+#        this.db.execute(checkLogfileSql)
+#        wrongKeyTries=this.db.fetchmany(101)
         
         this.db.execute("select pin from konto where kto="+str(kto)+" and pin="+str(pin) + ";")
         f = this.db.fetchmany(2)
         success = len(f)==1
         timestamp = time()
-        logfile_sql="insert into logfile(zeit,kto,erledigt) values ('" + str(timestamp) + "','" + str(kto) + "','" + str(int(success)) + "');"
-        this.db.execute(logfile_sql)
-        return success and len(wrongKeyTries) <= 100
+#        logfile_sql="insert into logfile(zeit,kto,erledigt) values ('" + str(timestamp) + "','" + str(kto) + "','" + str(int(success)) + "');"
+#        this.db.execute(logfile_sql)
+        return success # and len(wrongKeyTries) <= 100
 
 
 

@@ -34,6 +34,7 @@ class DB():
         
     #initialise transaction
     def initTransaktion(this,ktof,ktot,msum):
+        this.db = this.dbfile.cursor()
         #Generate the random tid
         tid=random.randint(1000000,9999999)
         this.db.execute("select * from transaktion where tid='"+str(tid)+"';")
@@ -53,6 +54,7 @@ class DB():
         
     #confirm the transaction
     def setErledigt(this,tid,vonkto,ankto,betrag):
+        this.db = this.dbfile.cursor()
         this.db.execute("select * from transaktion where tid='"+str(tid)+"' and vonkto='"+str(vonkto)+"' and ankto='"+str(ankto)+"' and betrag='"+str(betrag)+"';")
         apfel = this.db.fetchmany(2)
         if(len(apfel)>= 1):
@@ -63,7 +65,7 @@ class DB():
         
     #check for the pin
     def checkPin(this, kto, pin):
-
+        this.db = this.dbfile.cursor()
 #        checkLogfileSql="select * from logfile where erledigt='0' and zeit > " + str(time()-5*60) + " and  kto='"+str(kto) + "';"
 #        this.db.execute(checkLogfileSql)
 #        wrongKeyTries=this.db.fetchmany(101)

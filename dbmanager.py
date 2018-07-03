@@ -26,7 +26,7 @@ class DB():
         for i in add:
             money+=int(i[0])
         sql="select betrag from transaktion where vonkto='"+str(kto)+"' AND erledigt=1;"
-        this.db.execute(sql).
+        this.db.execute(sql)
         sub = this.db.fetchall()
         for i in sub:
             money-=int(i[0])

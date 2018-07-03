@@ -3,7 +3,7 @@
 #ctn{
     margin:0 auto;
     width:100%;
-    max-width:400px;
+    max-width:800px;
     border:1px solid #888888;
     padding:5px;
     background-color:#DDDDDD;
@@ -11,18 +11,20 @@
 
 #ctn table{
     width:100%;
-    font-size:30px;
+    font-size:50px;
 }
 #ctn button{
     width:100%;
+    font-size:50px;
 }
 #ctn input{
     width:100%;
+    font-size:50px;
 }
 
 body{
     background-repeat: no-repeat;
-    font-size: 30pt;
+    font-size: 50pt;
 }
 .pictcha{
     margin:10 auto;

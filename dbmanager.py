@@ -3,6 +3,7 @@
 import sqlite3, random, pymysql
 from time import time
 
+from dbconf import a as conf
 
 class DBsqlite():
     
@@ -74,8 +75,8 @@ class DBmysql():
     def __init__(this):
         #set a database
         this.dbfile = pymysql.connect(host='localhost',
-                                      user='user',
-                                      password='passwd',
+                                      user=conf["user"],
+                                      password=conf["password"],
                                       db='db',
                                       charset='utf8mb4',
                                       cursorclass=pymysql.cursors.DictCursor)

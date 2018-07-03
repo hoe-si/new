@@ -24,12 +24,12 @@ class DB():
         this.db.execute(sql)
         add = this.db.fetchall()
         for i in add:
-            money+=int(i[0])
+            money+=int(i["betrag"])
         sql="select betrag from transaktion where vonkto='"+str(kto)+"' AND erledigt=1;"
         this.db.execute(sql)
         sub = this.db.fetchall()
         for i in sub:
-            money-=int(i[0])
+            money-=int(i["betrag"])
         return money
         
     #initialise transaction
@@ -67,10 +67,13 @@ class DB():
 #        checkLogfileSql="select * from logfile where erledigt='0' and zeit > " + str(time()-5*60) + " and  kto='"+str(kto) + "';"
 #        this.db.execute(checkLogfileSql)
 #        wrongKeyTries=this.db.fetchmany(101)
+        print(kto)
+        print(pin)
         
         this.db.execute("select pin from konto where kto="+str(kto)+" and pin="+str(pin) + ";")
-        f = this.db.fetchmany(2)
-        success = len(f)==1
+        f = this.db.fetchall()
+        print(f)
+        success = len(f)>=1
         timestamp = time()
 #        logfile_sql="insert into logfile(zeit,kto,erledigt) values ('" + str(timestamp) + "','" + str(kto) + "','" + str(int(success)) + "');"
 #        this.db.execute(logfile_sql)

@@ -88,15 +88,13 @@ class DB():
         this.resetConnection()
         
     def resetConnection(self):
-        self.dbfile.commit()
-        self.dbfile.close()
         self.dbfile = pymysql.connect(host='localhost',
                                       user=conf["user"],
                                       password=conf["password"],
                                       db='hoesi',
                                       charset='utf8mb4',
                                       cursorclass=pymysql.cursors.DictCursor)
-        self.db = this.dbfile.cursor()
+        self.db = self.dbfile.cursor()
 
 
 

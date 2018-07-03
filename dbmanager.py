@@ -19,7 +19,7 @@ class DB():
         
     #get the money
     def getKontostand(this,kto):
-
+        this.resetConnection()
         money = 0
         sql="select betrag from transaktion where ankto='"+str(kto)+"' AND erledigt=1;"
         this.db.execute(sql)
@@ -32,10 +32,12 @@ class DB():
         for i in sub:
             money-=int(i["betrag"])
         return money
+        this.resetConnection()
 
         
     #initialise transaction
     def initTransaktion(this,ktof,ktot,msum):
+        this.resetConnection()
         #Generate the random tid
         tid=random.randint(1000000,9999999)
         this.db.execute("select * from transaktion where tid='"+str(tid)+"';")
@@ -52,9 +54,11 @@ class DB():
         this.db.execute("insert into transaktion (tid,vonkto,ankto,betrag,erledigt,zeit) values "+vls+";")
         this.dbfile.commit()
         return tid
+        this.resetConnection()
         
     #confirm the transaction
     def setErledigt(this,tid,vonkto,ankto,betrag):
+        this.resetConnection()
         this.db.execute("select * from transaktion where tid='"+str(tid)+"' and vonkto='"+str(vonkto)+"' and ankto='"+str(ankto)+"' and betrag='"+str(betrag)+"';")
         apfel = this.db.fetchmany(2)
         if(len(apfel)>= 1):
@@ -62,9 +66,11 @@ class DB():
             this.dbfile.commit()
             return True
         return False
+        this.resetConnection()
         
     #check for the pin
     def checkPin(this, kto, pin):
+        this.resetConnection()
 #        checkLogfileSql="select * from logfile where erledigt='0' and zeit > " + str(time()-5*60) + " and  kto='"+str(kto) + "';"
 #        this.db.execute(checkLogfileSql)
 #        wrongKeyTries=this.db.fetchmany(101)
@@ -79,6 +85,7 @@ class DB():
 #        logfile_sql="insert into logfile(zeit,kto,erledigt) values ('" + str(timestamp) + "','" + str(kto) + "','" + str(int(success)) + "');"
 #        this.db.execute(logfile_sql)
         return success # and len(wrongKeyTries) <= 100
+        this.resetConnection()
         
     def resetConnection(self):
         self.dbfile.commit()

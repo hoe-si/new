@@ -1,9 +1,9 @@
 #! python3
 
 from bottle import route, run, static_file, template, request, error
-from dbmanager import DB
+from dbmanager import DBmysql
 
-db = DB()
+db = DBmysql()
 
 
 def getNOf(IntOrString, ifError=0):

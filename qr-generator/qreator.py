@@ -1,7 +1,8 @@
+#! usr/bin/python3
 import sqlite3
 
 
-standard="""<td>
+standard='''<div style="float:left; border:3px solid black; page-break-inside: avoid;">
 <font style="size:20">
 <table height="200" width="600" border="0">
 <tr><td colspan="3"><h1>H&ouml;Si-City 3.0</h1></td></tr>
@@ -13,12 +14,12 @@ standard="""<td>
 </font>
 <hr>
 Passwort:<!-- pw --!></div>
-</td>"""
+</div>'''
 
 
 a=open("a.html","a")
 
-a.write('<html><body><table cellspacing="0" border="1">')
+a.write('<html><body>')
 
 
 
@@ -27,8 +28,8 @@ def newdiv(pid,Name,Store,pw,nl=False):
 	a=a.replace("<!-- Geschaeft --!>",Store.rjust(10))
 	a=a.replace("<!-- id pupil --!>",pid)
 	a=a.replace("<!-- pw --!>",pw.rjust(10))
-	if nl:
-		a+= "</tr><tr>"
+#	if nl:
+#		a+= "</tr><tr>"
 	return a
 
 dbf=sqlite3.connect("database.db")
@@ -43,6 +44,6 @@ for i in plist:
 		anl=False
 	a.write(newdiv(str(i[0]),"Hans",str(i[2]),str(i[1]),nl=anl))
 	print(c)
-a.write("</table></body></html>")
+a.write("</body></html>")
 a.close()
 db.close()

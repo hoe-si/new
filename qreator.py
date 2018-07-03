@@ -41,6 +41,7 @@ dbf=sqlite3.connect(host='localhost',
 db=dbf.cursor()
 db.execute("select distinct konto.kto, konto.pin, gruppen.gkto from gruppen, konto where konto.kto=gruppen.skto")
 plist=db.fetchall()
+print(plist)
 c=0
 for i in plist:
 	c+=1

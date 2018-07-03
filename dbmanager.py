@@ -19,6 +19,7 @@ class DB():
         
     #get the money
     def getKontostand(this,kto):
+        this.db = this.dbfile.cursor()
         money = 0
         sql="select betrag from transaktion where ankto='"+str(kto)+"' AND erledigt=1;"
         this.db.execute(sql)
@@ -31,7 +32,7 @@ class DB():
         for i in sub:
             money-=int(i["betrag"])
         return money
-        this.db.close()
+        this.dbfile.close()
         
     #initialise transaction
     def initTransaktion(this,ktof,ktot,msum):
@@ -52,7 +53,7 @@ class DB():
         this.db.execute("insert into transaktion (tid,vonkto,ankto,betrag,erledigt,zeit) values "+vls+";")
         this.dbfile.commit()
         return tid
-        this.db.close()
+        this.dbfile.close()
         
     #confirm the transaction
     def setErledigt(this,tid,vonkto,ankto,betrag):
@@ -64,7 +65,7 @@ class DB():
             this.dbfile.commit()
             return True
         return False
-        this.db.close()
+        this.dbfile.close()
         
     #check for the pin
     def checkPin(this, kto, pin):
@@ -83,7 +84,7 @@ class DB():
 #        logfile_sql="insert into logfile(zeit,kto,erledigt) values ('" + str(timestamp) + "','" + str(kto) + "','" + str(int(success)) + "');"
 #        this.db.execute(logfile_sql)
         return success # and len(wrongKeyTries) <= 100
-        this.db.close()
+        this.dbfile.close()
 
 
 

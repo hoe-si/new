@@ -49,7 +49,7 @@ for i in plist:
 		anl=True
 	else:
 		anl=False
-	a.write(newdiv(str(i[0]),"Hans",str(i[2]),str(i[1]),nl=anl))
+	a.write(newdiv(str(i["kto"]),"Hans",str(i["gkto"]),str(i["pin"]),nl=anl))
 	print(c)
 a.write("</body></html>")
 a.close()

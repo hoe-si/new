@@ -39,6 +39,9 @@ class DB():
         this.db.execute("select * from transaktion where tid='"+str(tid)+"';")
         while(len(this.db.fetchmany(100))>=1):
             tid=random.randint(1000,9999)
+            this.db.execute("select * from transaktion where tid='"+str(tid)+"';")
+            
+            
         #genereate the timestamp
         apfel = time()
         #prouce the sql

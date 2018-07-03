@@ -37,7 +37,7 @@ dbf=sqlite3.connect(host='localhost',
                     password=conf["password"],
                     db='hoesi',
                     charset='utf8mb4',
-                    cursorclass=pymysql.cursors.DictCursor)
+                    cursorclass=sqlite3.cursors.DictCursor)
 db=dbf.cursor()
 db.execute("select distinct konto.kto, konto.pin, gruppen.gkto from gruppen, konto where konto.kto=gruppen.skto")
 plist=db.fetchall()

@@ -1,3 +1,4 @@
+ 
 #/usr/bin/python3 
 
 import sqlite3, random, pymysql
@@ -122,6 +123,7 @@ class DBsqlite(DB):
 class DBmysql(DB):
     
     def __init__(this):
+        super()
         #set a database
         this.dbfile = pymysql.connect(host='localhost',
                                       user=conf["user"],
@@ -130,6 +132,4 @@ class DBmysql(DB):
                                       charset='utf8mb4',
                                       cursorclass=pymysql.cursors.DictCursor)
         this.db = this.dbfile.cursor()
-        print("apfel")
-        
-
+print("apfel")

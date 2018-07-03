@@ -7,7 +7,6 @@ from dbmanager import DBmysql,DBsqlite
 
 db = DBmysql()
 
-footer='<div class="foot"><a href="impressum.html">IMPRESSUM</a></div>'
 def getNOf(IntOrString, ifError=0):
     # function returns integer value of any other value or the value in ifError, if converting to int is impossible
     if type(IntOrString) != int:
@@ -27,7 +26,7 @@ def send_static(filename):
 @route('/init.html')
 @route('/pin.html')
 def page_init():
-    return template('./templates/init.html', kto=request.query.kto or "fehlerhaft",foot=footer)
+    return template('./templates/init.html', kto=request.query.kto or "fehlerhaft")
 
 
 @route('/pin.html', method='POST')
@@ -36,8 +35,7 @@ def page_pin():
         "vonkto":request.forms.get("vonkto"),
         "ankto":request.forms.get("ankto"),
         "betrag":request.forms.get("betrag"),
-        "tid":db.initTransaktion(getNOf(request.forms.get("vonkto")), getNOf(request.forms.get("ankto")), getNOf(request.forms.get("betrag"))),
-        "foot":footer
+        "tid":db.initTransaktion(getNOf(request.forms.get("vonkto")), getNOf(request.forms.get("ankto")), getNOf(request.forms.get("betrag")))
     }
     
     return template('./templates/pin.html', **params)
@@ -51,8 +49,7 @@ def page_return():
         "ankto":request.forms.get("ankto"),
         "betrag":request.forms.get("betrag"),
         "hintergrund":"#ff0000",
-        "erledigt":"Fehlgeschlagen",
-        "foot":footer
+        "erledigt":"Fehlgeschlagen"
     }
     
     tid= getNOf(request.forms.get("tid"))
@@ -78,33 +75,33 @@ def page_return():
 
 @route("/select.html")
 def page_select():
-    return template('./templates/select.html', kto= request.query.kto or "fehlerhaft",foot=footer)
+    return template('./templates/select.html', kto= request.query.kto or "fehlerhaft")
 
 
 @route("/kontostand.html", method="POST")
 def page_kontostand():
     reqKto=request.forms.get("kto")
     if db.checkPin(reqKto,request.forms.get("pin")):
-        return template("./templates/kontostand.html",kto = request.forms.get("kto"), betrag= db.getKontostand(reqKto),foot=footer)
+        return template("./templates/kontostand.html",kto = request.forms.get("kto"), betrag= db.getKontostand(reqKto))
     else:
         return page_error_403("dummy")
          
 
 @route("/check.html")
 def page_check():
-    return template('./templates/check.html', kto= request.query.kto or "fehlerhaft",foot = footer)
+    return template('./templates/check.html', kto= request.query.kto or "fehlerhaft")
 
 @error(500)
 def page_error_500(error):
-    return send_static('/errors/500.html',foot = footer)
+    return send_static('/errors/500.html')
 
 @error(404)
 def page_error_404(error):
-    return send_static('/errors/404.html',foot = footer)
+    return send_static('/errors/404.html')
 
 @error(403)
 def page_error_403(error):
-    return send_static('/errors/403.html',foot = footer)
+    return send_static('/errors/403.html')
 
 @route("<filename:path>")
 def page_index(filename):

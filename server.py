@@ -1,11 +1,11 @@
-#! python3
+#! /usr/bin/python3
 
 from bottle import route, run, static_file, template, request, error
 
 from dbmanager import DBmysql,DBsqlite
 
 
-db = DBmysql()
+db = DBsqlite()
 
 def getNOf(IntOrString, ifError=0):
     # function returns integer value of any other value or the value in ifError, if converting to int is impossible

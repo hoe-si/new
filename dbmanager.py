@@ -4,7 +4,7 @@ import sqlite3, random, pymysql
 import pymysql.cursors
 from time import time
 
-from dbconf import a as conf
+conf=None
 
 
 

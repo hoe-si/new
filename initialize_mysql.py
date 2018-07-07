@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 import pymysql, random
-from dbconf import a as conf
+from conf import a as conf
 dbpath = "hoesi"
 dbfile = pymysql.connect(host='localhost',
                          user=conf["user"],

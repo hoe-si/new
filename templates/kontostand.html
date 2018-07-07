@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Konto</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" id="stil">
+    <link rel="stylesheet" type="text/css" href="style.css" id="stil">
   </head>
   <body>
     <div id="ctn">
@@ -10,7 +10,14 @@
 	<tr><td>Kontostand:</td><td>{{betrag}}</td></tr>
 	<tr><td>Abmelden:</td><td><button onclick="window.location.replace('/index.html')">LOGOUT</button></td></tr>
       </table>
+              
       </div>
+      <br>
+      <div class= "history">
+      &Uuml;berweisungen:<br><br>
+      {{!history}}
+      </div>
+      <br><br>
       <a href="/impressum.html" class="footer">Impressum</a>
   </body>
 </html>

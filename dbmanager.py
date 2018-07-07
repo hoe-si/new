@@ -53,6 +53,7 @@ class DB():
         #execute it!
         db.execute("insert into transaktion (tid,vonkto,ankto,betrag,erledigt,zeit) values "+vls+";")
         db.close()
+        this.dbfile.commit()
         return tid
 
         
@@ -61,12 +62,14 @@ class DB():
         db= this.dbfile.cursor()
         db.execute("select * from transaktion where tid='"+str(tid)+"' and vonkto='"+str(vonkto)+"' and ankto='"+str(ankto)+"' and betrag='"+str(betrag)+"';")
         apfel = db.fetchmany(2)
+        re = False
         if(len(apfel)>= 1):
             db.execute("update transaktion set erledigt = 1 where tid='"+str(tid)+"';")
             db.close()
-            return True
+            re= True
         db.close()
-        return False
+        this.dbfile.commit()
+        return re
         
     #check for the pin
     def checkPin(this, kto, pin):
@@ -82,9 +85,14 @@ class DB():
         logfile_sql="insert into logfile(zeit,kto,erledigt) values ('" + str(timestamp) + "','" + str(kto) + "','" + str(int(success)) + "');"
         db.execute(logfile_sql)
         db.close()
+        this.dbfile.commit()
         return success  and len(wrongKeyTries) <= 100
         
-
+        
+    def getHistory(this,kto):
+        db= this.dbfile.cursor()
+        db.execute('select zeit, betrag, ankto, vonkto from transaktion where erledigt = 1 and ( vonkto = ' + str(kto) + ' or ankto = ' + str(kto) + ') order by zeit desc;')
+        return db.fetchall()
 
 
 

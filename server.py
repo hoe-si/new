@@ -4,6 +4,8 @@ from bottle import route, run, static_file, template, request, error
 
 from dbmanager import DBmysql,DBsqlite
 
+from time import localtime
+
 
 db = DBsqlite()
 
@@ -17,6 +19,23 @@ def getNOf(IntOrString, ifError=0):
     return abs(IntOrString)
 
 
+def getHTable(tlist,kto):
+    out= '<table><tr><td>Typ</td><td>Zeitpunkt</td><td>Betrag</td><td></td><td>&Uuml;berweisungspartner</td></tr>'
+    for i in tlist:
+        if i["ankto"]==kto:
+            aov = "von:"
+            partner = str(i["vonkto"])
+            typ = "+"
+        else:
+            aov = "an:"
+            partner = str(i["ankto"])
+            typ = '-'
+        zeit = localtime(i['zeit'])
+        zeit = str(zeit[3]) + ':' + str(zeit[4]) + ':' + str(zeit[5])
+        out += ( '<tr><td>' + typ + '</td><td>' + zeit + '</td><td>' + str(i["betrag"]) + ' H&ouml;Si </td><td>' + aov + '</td><td>' + partner + '</td></tr>')
+    out += '</table>'
+    return out
+         
 
 
 @route('/static/<filename:path>')
@@ -80,12 +99,16 @@ def page_select():
 
 @route("/kontostand.html", method="POST")
 def page_kontostand():
-    reqKto=request.forms.get("kto")
-    if db.checkPin(reqKto,request.forms.get("pin")):
-        return template("./templates/kontostand.html",kto = request.forms.get("kto"), betrag= db.getKontostand(reqKto))
+    reqKto = getNOf(request.forms.get("kto"))
+    reqPin = getNOf(request.forms.get("pin"))
+    if db.checkPin(reqKto,reqPin):
+        history= db.getHistory(reqKto)
+        hTable = getHTable(history,reqKto)
+        return template("./templates/kontostand.html",kto = reqKto, betrag= db.getKontostand(reqKto),history=hTable)
     else:
         return page_error_403("dummy")
-         
+
+
 
 @route("/check.html")
 def page_check():

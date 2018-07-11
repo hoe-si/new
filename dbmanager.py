@@ -22,12 +22,12 @@ class DB():
     def getKontostand(this,kto):
         db= this.dbfile.cursor()
         money = 0
-        sql="select betrag from transaktion where ankto='"+str(kto)+"' AND erledigt=1;"
+        sql="select betrag from transaktion where ankto="+str(kto)+" AND erledigt=1;"
         db.execute(sql)
         add = db.fetchall()
         for i in add:
             money+=int(i["betrag"])
-        sql="select betrag from transaktion where vonkto='"+str(kto)+"' AND erledigt=1;"
+        sql="select betrag from transaktion where vonkto="+str(kto)+" AND erledigt=1;"
         db.execute(sql)
         sub = db.fetchall()
         for i in sub:
@@ -41,15 +41,15 @@ class DB():
         db= this.dbfile.cursor()
         #Generate the random tid
         tid=random.randint(1000000,9999999)
-        db.execute("select * from transaktion where tid='"+str(tid)+"';")
+        db.execute("select * from transaktion where tid="+str(tid)+";")
         while(len(db.fetchmany(100))>=1):
             tid=random.randint(1000,9999)
-            db.execute("select * from transaktion where tid='"+str(tid)+"';")
+            db.execute("select * from transaktion where tid="+str(tid)+";")
             
         #genereate the timestamp
         apfel = time()
         #prouce the sql
-        vls = "("+str(tid)+","+str(ktof)+","+str(ktot)+","+str(msum)+",0,'"+str(apfel)+"')"
+        vls = "("+str(tid)+","+str(ktof)+","+str(ktot)+","+str(msum)+",0,"+str(apfel)+")"
         #execute it!
         db.execute("insert into transaktion (tid,vonkto,ankto,betrag,erledigt,zeit) values "+vls+";")
         db.close()
@@ -60,11 +60,11 @@ class DB():
     #confirm the transaction
     def setErledigt(this,tid,vonkto,ankto,betrag):
         db= this.dbfile.cursor()
-        db.execute("select * from transaktion where tid='"+str(tid)+"' and vonkto='"+str(vonkto)+"' and ankto='"+str(ankto)+"' and betrag='"+str(betrag)+"';")
+        db.execute("select * from transaktion where tid="+str(tid)+" and vonkto="+str(vonkto)+" and ankto="+str(ankto)+" and betrag="+str(betrag)+";")
         apfel = db.fetchmany(2)
         re = False
         if(len(apfel)>= 1):
-            db.execute("update transaktion set erledigt = 1 where tid='"+str(tid)+"';")
+            db.execute("update transaktion set erledigt = 1 where tid="+str(tid)+";")
             db.close()
             re= True
         db.close()
@@ -74,17 +74,15 @@ class DB():
     #check for the pin
     def checkPin(this, kto, pin):
         db= this.dbfile.cursor()
-        checkLogfileSql="select * from logfile where erledigt='0' and zeit > " + str(time()-5*60) + " and  kto='"+str(kto) + "';"
+        checkLogfileSql="select * from logfile where erledigt=0 and zeit > " + str(time()-5*60) + " and  kto="+str(kto) + ";"
         db.execute(checkLogfileSql)
         wrongKeyTries=db.fetchmany(101)
-        
+        print(wrongKeyTries)
         db.execute("select pin from konto where kto="+str(kto)+" and pin="+str(pin) + ";")
         f = db.fetchall()
         success = len(f)>=1
-        print("status"+str(success))
-        print("f:"+str(f))
         timestamp = time()
-        logfile_sql="insert into logfile(zeit,kto,erledigt) values ('" + str(timestamp) + "','" + str(kto) + "','" + str(int(success)) + "');"
+        logfile_sql="insert into logfile(zeit,kto,erledigt) values (" + str(timestamp) + "," + str(kto) + "," + str(int(success)) + ");"
         db.execute(logfile_sql)
         db.close()
         this.dbfile.commit()

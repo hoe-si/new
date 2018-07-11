@@ -18,7 +18,7 @@ def getNOf(IntOrString, ifError=0):
     if type(IntOrString) != int:
         try:
             return int(IntOrString)
-        except ValueError:
+        except:
             return ifError
     return abs(IntOrString)
 

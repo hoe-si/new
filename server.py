@@ -17,7 +17,7 @@ def getNOf(IntOrString, ifError=0):
     # function returns integer value of any other value or the value in ifError, if converting to int is impossible
     if type(IntOrString) != int:
         try:
-            return int(IntOrString)
+            IntOrString = int(IntOrString)
         except:
             return ifError
     return abs(IntOrString)

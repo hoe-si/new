@@ -81,6 +81,8 @@ class DB():
         db.execute("select pin from konto where kto="+str(kto)+" and pin="+str(pin) + ";")
         f = db.fetchall()
         success = len(f)>=1
+        print("status"+str(success))
+        print("f:"+str(f))
         timestamp = time()
         logfile_sql="insert into logfile(zeit,kto,erledigt) values ('" + str(timestamp) + "','" + str(kto) + "','" + str(int(success)) + "');"
         db.execute(logfile_sql)

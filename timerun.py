@@ -45,7 +45,7 @@ else:
     tax = lessMoneySum/leftMoneySum
 
 
-print("Um alle durch den Mindestlohn entstandenen Verluste der Bank zu korrigieren, müsste ein Steuersatz von "+ str(tax * 100) +r"% erhoben werden",2)
+print("Um alle durch den Mindestlohn entstandenen Verluste der Bank zu korrigieren, müsste ein Steuersatz von "+ str(tax * 100) +r"% erhoben werden")
 iprint("Es besteht die Möglichkeit den errechneten Optimalsteuersatz zu korrigieren. Da der Mindestlohn weiterhin ausgezahlt wird, hätte dies zur Folge, dass Konto 1 entweder negativ wird, oder eine Summe an geld aufgespart wird, um bei der nächsten Gehaltsauszahlung die Steuern zu reduzieren.\n\n",2)
 if tax >1:
     iprint("Der Sterersatz beträgt mehr als 100 Prozent",7)

@@ -34,10 +34,9 @@ old = db.getKontostand(1)
 print("lessMoney groups: ",lessMoney)
 print("leftMoney groups: ",leftMoney)
 print("\n\n\n\n")
-if old < 0:
-    lessMoneySum += old * -1
-else:
-    leftMoneySum += old
+
+lessMoneySum += old * -1
+
 
 if leftMoneySum == 0:
     tax = 10
@@ -60,7 +59,6 @@ curs.close()
 for i in gruppen:
     print("Gruppe "+ str(i["gkto"]))
     groupCurs = db.dbfile.cursor()
-    groupMoney = db.getKontostand(i["gkto"])
     if i["gkto"] in leftMoney.keys():
         endTax = int(leftMoney[i["gkto"]] * tax)
         taxTid = db.initTransaktion(i["gkto"],1,endTax)
@@ -69,10 +67,13 @@ for i in gruppen:
     else:
         endTax = lessMoney[i["gkto"]]
         taxTid = db.initTransaktion(1,i["gkto"],endTax)
-        db.setErledigt(taxTid,i["gkto"],1,endTax)
+        db.setErledigt(taxTid,1,i["gkto"],endTax)
         print("es wurden ", endTax, " an Gruppe ", i["gkto"], "überwiesen.")
     groupCurs.execute('select skto from gruppen where gkto = '+ str(i["gkto"])+' ;')
     pupsOfGroup = groupCurs.fetchall()
+    groupMoney = db.getKontostand(i["gkto"])
+    print(i["gkto"])
+    print(groupMoney)
     pupMoney = int(groupMoney/len(pupsOfGroup))
     for a in pupsOfGroup:
         print("Schüler ",a["skto"])

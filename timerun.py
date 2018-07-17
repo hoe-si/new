@@ -3,7 +3,17 @@
 import dbmanager
 from printer import iprint
 
-db = dbmanager.DBsqlite()
+from time import localtime
+import conf
+
+dbmanager.conf = conf.a
+if conf.dbtype == "sqlite":
+    db = dbmanager.DBsqlite()
+else:
+    db = dbmanager.DBmysql()
+
+
+
 
 curs = db.dbfile.cursor()
 mindestlohn= 5

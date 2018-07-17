@@ -57,7 +57,7 @@ else:
 print("Um alle durch den Mindestlohn entstandenen Verluste der Bank zu korrigieren, müsste ein Steuersatz von "+ str(tax * 100) +r"% erhoben werden")
 iprint("Es besteht die Möglichkeit den errechneten Optimalsteuersatz zu korrigieren. Da der Mindestlohn weiterhin ausgezahlt wird, hätte dies zur Folge, dass Konto 1 entweder negativ wird, oder eine Summe an geld aufgespart wird, um bei der nächsten Gehaltsauszahlung die Steuern zu reduzieren.\n\n",2)
 if tax >1:
-    iprint("Der Sterersatz beträgt mehr als 100 Prozent",7)
+    iprint("Der Steuersatz beträgt mehr als 100 Prozent",7)
     print("""Damit würden die Mitarbeiter Von Geschäften, welche ihre Kosten decken können, weniger als den Mindestlohn erhalten!
         Wir raten dringend davon ab, den Steuersatz bei diesem Wert zu belassen.""", "\n\n\n")
 userTax=input("Gewünschter Steuersatz in Prozent [" + str(tax * 100) +"] :")
@@ -82,8 +82,6 @@ for i in gruppen:
     groupCurs.execute('select skto from gruppen where gkto = '+ str(i["gkto"])+' ;')
     pupsOfGroup = groupCurs.fetchall()
     groupMoney = db.getKontostand(i["gkto"])
-    print(i["gkto"])
-    print(groupMoney)
     pupMoney = int(groupMoney/len(pupsOfGroup))
     for a in pupsOfGroup:
         print("Schüler ",a["skto"])

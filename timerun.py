@@ -16,7 +16,7 @@ else:
 
 
 curs = db.dbfile.cursor()
-mindestlohn= 5
+mindestlohn= 4
 
 # finde Fehlendes und überflüssiges Geld bei den Gruppen
 
